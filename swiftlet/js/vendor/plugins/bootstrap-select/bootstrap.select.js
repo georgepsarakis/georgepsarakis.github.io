@@ -22,7 +22,7 @@
             var classList = this.$element.attr('class') !== undefined ? this.$element.attr('class').split(/\s+/) : '';
             var template = this.getTemplate();
             var id = this.$element.attr('id');
-            template = this.createLi(template);
+            template = this.createLi(template).replace('__ID__', id + '-selectpicker');
             this.$element.after(template);
             this.$newElement = this.$element.next('.bootstrap-select');
             var select = this.$newElement;
@@ -82,7 +82,7 @@
 
         getTemplate: function() {
             var template =
-                "<div class='btn-group bootstrap-select'>" +
+                "<div id=\"__ID__\" class='btn-group bootstrap-select'>" +
                     "<button class='btn dropdown-toggle clearfix' data-toggle='dropdown'>" +
                         "<span class='filter-option pull-left'>__SELECTED_OPTION</span>&nbsp;" +
                         "<span class='caret'></span>" +
