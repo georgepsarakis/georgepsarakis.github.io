@@ -1,4 +1,5 @@
 var search_width = 0;
+var current_tweet_scroll_index = 0;
 $(document).ready(
   function() {
     search_width = $('#search').width();
@@ -16,6 +17,25 @@ $(document).ready(
       }
     });
     $('.selectpicker').selectpicker();
+    $(document).keydown(function(e) {
+      var scroll_options = { 'axis' : 'y', 'duration' : 1000, 'margin' : true , 'offset' : { 'top' : -60, 'left' : 0 } };
+      if ( e.keyCode == 40 ) {
+	current_tweet_scroll_index++;
+	if ( current_tweet_scroll_index > $('#tweet-list li').length - 1 )
+	  current_tweet_scroll_index = $('#tweet-list li').length - 1;
+        $.scrollTo('#tweet-list li:eq(' + current_tweet_scroll_index + ')', scroll_options );
+	e.preventDefault();
+      }
+      else if ( e.keyCode == 38 ) {
+	current_tweet_scroll_index--;
+	if ( current_tweet_scroll_index < 0 )
+	  current_tweet_scroll_index = 0;
+	$.scrollTo('#tweet-list li:eq(' + current_tweet_scroll_index + ')', scroll_options );
+	e.preventDefault();
+      } else {
+	current_tweet_scroll_index = 0;
+      }
+    });
     /*
     $(document).on('click', '.display-tweet-trigger', function(){
       var id = $(this).attr('class').match(/id-[0-9]+/)[0].replace('id-', '');
