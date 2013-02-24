@@ -13,3 +13,4 @@ TODO
     * geocode
 - localstorage for my searches listing
 - BBQ jQuery plugin for history
+- multi-language highlighting http://stackoverflow.com/questions/863800/replacing-diacritics-in-javascript

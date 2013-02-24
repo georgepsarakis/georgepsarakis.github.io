@@ -5,7 +5,7 @@ $(document).ready(
       model : Tweet,
       sync : function(method, model, options){
 	options.dataType = 'jsonp';
-	options.url = 'http://search.twitter.com/search.json?rpp=50&lang=en&result_type=recent&callback=?';
+	options.url = 'http://search.twitter.com/search.json?rpp=50&callback=?';
 	return Backbone.sync(method, model, options);
       },
       parse : function(response){
@@ -16,8 +16,8 @@ $(document).ready(
 	  var td = new Date(t['created_at']);
 	  var hour = td.getHours();
 	  var minute = td.getMinutes();
-	  minute = minute.length == 1 ? '0' + minute : minute;
-	  hour = hour.length == 1 ? '0' + hour : hour;
+	  minute = ( minute < 10 ) ? '0' + minute : minute;
+	  hour = ( hour < 10 ) ? '0' + hour : hour;
 	  td = [ [ td.getDate(), td.getMonth() + 1, td.getFullYear() ], [ hour, minute ] ];
 	  response['results'][index]['created_at'] = td[0].join('/') + ' ' + td[1].join(':');
 	  // highlighting/entity parsing
@@ -79,7 +79,6 @@ $(document).ready(
 	}   
     });
 
-
     window.TweetListItemView = Backbone.View.extend({ 
       tagName:"li", 
       template:_.template($('#tweet-item').html()),
@@ -100,16 +99,19 @@ $(document).ready(
     // Router
     var AppRouter = Backbone.Router.extend({
 	routes:{
-	    "search/:q"       : "list",
+	    "search/:q/:page/:lang" : "list",
 	    "tweet/:id" : "tweetDetails"
 	},
-	list:function (q) {
+	list : function (q, p, l) {
+	    if (q.replace(/\s+/,'') == '')
+	      return false;
 	    this.tweetList = new TweetCollection();
 	    this.tweetListView = new TweetListView({model:this.tweetList});
-	    this.tweetList.fetch({ data: $.param({ q: $('#search').val() }) });
+	    this.tweetList.fetch({ data: $.param({ lang: l, q: $('#search').val(), page : p }) });
 	    $('#content').html(this.tweetListView.render().el);
+	    $.unblockUI();
 	},
-	tweetDetails:function (id) {
+	tweetDetails : function (id) {
 	    this.tweet = this.tweetList.get(id);
 	    this.tweetView = new TweetView({model:this.wine});
 	    $('#content-details').html(this.tweetView.render().el);
