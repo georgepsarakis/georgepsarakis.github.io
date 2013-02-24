@@ -5,7 +5,7 @@ $(document).ready(
     search_width = $('#search').width();
     $('#language-select').change(
       function(){
-	window.location.hash = hashManage({ ':lang' : $(this).children('option:selected').val() });
+	Reload(hashManage({ ':lang' : $(this).children('option:selected').val() }));
       }
     );
     initCache();
@@ -14,9 +14,17 @@ $(document).ready(
       url: 'json/languages.json',
       async: false,
       success: function(data){
-        $.each(data, function(index, lang){
+	var data_hash = {};
+	var keys = [];
+	$.each(data, function(index, lang) {
+          keys.push(lang['name']);
+	  data_hash[lang['name']] = lang;
+	});
+	keys.sort();
+        $.each(keys, function(index, key){
+	  var lang = data_hash[key];
   	  var selected = (lang['code'] == 'en') ? 'selected' : '';
-	  var option = '<option ' + selected + ' value="' + lang['code'] + '"><a href="javascript:void(0);">' + lang['name']  + '</a></option>    ';
+	  var option = '<option ' + selected + ' value="' + lang['code'] + '">' + lang['name']  + '</option>    ';
           $('#language-select').append( option );
         });
       }
@@ -77,7 +85,8 @@ $(document).ready(
 );        
 
 function Reload(hash) {
-  window.location.hash = hash;
+  if ( typeof(hash) !== 'undefined' )
+    window.location.hash = hash;
   var blockui_css = { 
         padding:         0, 
         margin:          0, 
@@ -98,6 +107,8 @@ function Reload(hash) {
   };
   $.blockUI({ overlayCSS : blockui_overlay, 
               css: blockui_css , 
+	      fadeIn : 100,
+	      fadeOut : 800,
               message: '<img src="img/ajax-loader.png" />' 
             }); 
 }
