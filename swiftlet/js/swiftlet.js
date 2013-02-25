@@ -51,11 +51,15 @@ $(document).ready(
 	  });
 	  //cleanup html
 	  var split_text = tweet_text.split('<a href="');
-	  if ( split_text !== null) {
+	  if ( ( split_text.length > 1 ) && split_text !== null) {
 	    $.each(split_text, function(index, p){
 	      c = p.split('blank">');
-              c[0] = c[0].replace('<span class="hl">', '').replace('</span>', '');
-	      split_text[index] = c.join('blank">');	      
+	      if ( c.length > 1 ) {
+                c[0] = c[0].replace('<span class="hl">', '').replace('</span>', '');
+	        split_text[index] = c.join('blank">');	      
+	      } else {
+		split_text[index] = c.join('');
+	      }
 	    });
 	    tweet_text = split_text.join('<a href="');	    
 	  }
