@@ -14,3 +14,7 @@ TODO
 - localstorage for my searches listing
 - BBQ jQuery plugin for history
 - multi-language highlighting http://stackoverflow.com/questions/863800/replacing-diacritics-in-javascript
+- https://dev.twitter.com/docs/api/1/get/users/lookup
+- UI hints
+- tooltips
+- query builder / add syntax tips/help (?)
