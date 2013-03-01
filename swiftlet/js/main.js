@@ -1,14 +1,32 @@
 var search_width = 0;
 var current_tweet_scroll_index = 0;
+
+var diacritics = [
+        [/[A\300-\306]/g, 'A'],
+        [/[a\340-\346]/g, 'a'],
+        [/[E\310-\313]/g, 'E'],
+        [/[e\350-\353]/g, 'e'],
+        [/[I\314-\317]/g, 'I'],
+        [/[i\354-\357]/g, 'i'],
+        [/[O\322-\330]/g, 'O'],
+        [/[o\362-\370]/g, 'o'],
+        [/[U\331-\334]/g, 'U'],
+        [/[u\371-\374]/g, 'u'],
+        [/[N\321]/g, 'N'],
+        [/[n\361]/g, 'n'],
+        [/[C\307]/g, 'C'],
+        [/[c\347]/g, 'c'],
+    ];
+
 $(document).ready(
   function() {    
+    initCache();
     search_width = $('#search').width();
     $('#language-select').change(
       function(){
 	Reload(hashManage({ ':lang' : $(this).children('option:selected').val() }));
       }
     );
-    initCache();
     $.ajax({
       dataType: "json",
       url: 'json/languages.json',
@@ -29,6 +47,13 @@ $(document).ready(
         });
       }
     });
+    $('#language-select-selectpicker ul li a').click(
+      function(){
+	var icon = '<i class="icon-ok-sign"></i>';
+	//$('#language-select-selectpicker ul li a').remove(icon);
+	//$(this).prepend(icon).fadeIn();
+      }
+    );
     $(document).keydown(function(e) {
       var hook = ($(document.activeElement).prop('tagName') == 'BODY');
       var scroll_options = { 'axis' : 'y', 'duration' : 1000, 'margin' : true , 'offset' : { 'top' : -60, 'left' : 0 } };
@@ -55,7 +80,9 @@ $(document).ready(
       var scroll_condition = ($(window).scrollTop() >= height);
       scroll_condition = scroll_condition && ($('.blockUI').css('display') != 'none');
       if ( scroll_condition ) {
-        Reload(hashManage({ ':page' : parseInt(fetchHashParam(':page'), 10) + 1 } ));
+	var current_page = parseInt(fetchHashParam(':page'), 10);
+	if ( !isNaN(current_page) )
+          Reload(hashManage({ ':page' : current_page + 1 } ));
       }
     });
     // restore controls based on hash
@@ -64,9 +91,18 @@ $(document).ready(
         var h = window.location.hash.replace(/^#\/search\//, '');
 	h = _.map(h.split('/'), decodeURIComponent);
         $('#search').val(h[0]);
-	$('#language-select').val(h[1]);
+        $('#language-select').val(fetchHashParam(':lang'));
       }
     }
+    $.each(getCache('swiftlet').searches, function(index, search){
+      $('#my-searches').append('<li><a class="search-item" href="#"><i class="icon-chevron-right"></i>' + $('<span>'+search+'</span>').text() + '</a></li>');
+    });
+    //$('#my-searches').append('<li><a role="button" class="btn btn-danger" onclick="clearCache();">Clear</a></li>');
+    $('#my-searches a.search-item').click(function(){
+      $('#search').val($(this).text());
+      var params = {':q' : $(this).text(), ':lang' : $('#language-select option:selected').val(), ':page' : 1 };
+      Reload(hashManage(params));
+    });
     $('#search').keydown(function(e) {
       if ( e.keyCode == 13 ) {
         var params = {':q' : $(this).val(), ':lang' : $('#language-select option:selected').val(), ':page' : 1 };
@@ -84,9 +120,18 @@ $(document).ready(
   }
 );        
 
+function VerifyHash(h) {
+  $.each(h.split('/'), function(i, p){
+    if ( p.replace(/\s+/, '') == '') return false;
+  });
+  return true;
+}
+
 function Reload(hash) {
-  if ( typeof(hash) !== 'undefined' )
-    window.location.hash = hash;
+  if ( typeof(hash) !== 'undefined' ) {
+    if ( VerifyHash(hash) )
+      window.location.hash = hash;
+  }
   var blockui_css = { 
         padding:         0, 
         margin:          0, 
@@ -166,8 +211,10 @@ function getCache(k) {
 
 function setCacheArray(k, v) {
   var c = getCache(k);
-  if ( ( c !== null ) && !(v in c) )
-    setCache(c['searches'].push(v));
+  if ( !(v in c.searches) ) {
+    c.searches.push(v);
+    setCache(k, c);
+  }
 }
 
 function escapeRegExp(str) {

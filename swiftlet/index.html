@@ -28,7 +28,7 @@
         
         <div class="navbar navbar-fixed-top">
 	  <div class="navbar-inner">
-	    <div id="logo"></div>
+	    <a id="logo"></a>
 	    <div style="display:none;" class="btn-group">
 	      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
 		Result Type<span class="caret"></span>
@@ -47,12 +47,63 @@
         </div>
 	<div class="container-fluid">
 	  <div class="row-fluid">
-	    <div class="span2">
-	      <ul id="my-searches" class="nav nav-list affix"></ul>
-              <a role="button" class="hide btn btn-danger" onclick="clearCache();">Clear</a>
+	    <div class="span2 clearfix">
+	      <ul id="my-searches" class="clearfix nav nav-list affix"></ul>
 	    </div>
 	    <div class="span10">
-  	      <div id="content"></div>
+  	      <div id="content">
+	        <div class="hero-unit">
+		  <h1>Swiftlet flies in the latest searches on Twitter.</h1>
+		  <p>
+		  <table class="table table-condensed table-bordered">
+		    <tr>
+		      <td>dog cat</td>
+		      <td>tweets containing both dog and cat</td>
+		    </tr>
+		    <tr>
+		      <td>"dog barks"</td>
+		      <td>tweets with the exact phrase</td>
+		    </tr>
+		    <tr>
+		      <td>dog OR cat</td>
+		      <td>tweets containing either dog or cat or both</td>
+		    </tr>
+		    <tr>
+		      <td>dog -cat</td>
+		      <td>tweets containing dog but <u>NOT</u> cat</td>
+		    </tr>
+		    <tr>
+		      <td>#dog</td>
+		      <td>containing the hashtag "dog"</td>
+		    </tr>
+		    <tr>
+		      <td>from:george</td>
+		      <td>tweets from user "george"</td>
+		    </tr>
+		    <tr>
+		      <td>@george</td>
+		      <td>mentioning user "george"</td>
+		    </tr>
+		    <tr>
+		      <td>since:2012-05-11</td>
+		      <td>sent since 14/5/2012</td>
+		    </tr>
+		    <tr>
+		      <td>until:2012-05-11</td>
+		      <td>sent until 11/5/2012</td>
+		    </tr>
+		    <tr>
+		      <td>dog :)</td>
+		      <td>containing dog with positive attitude</td>
+		    </tr>
+		    <tr>
+		      <td>dog :(</td>
+		      <td>containing dog with negative attitude</td>
+		    </tr>
+		  </table>
+		  </p>
+		</div>
+	      </div>
 	    </div>
           </div>
 	  <div id="content-details"></div>

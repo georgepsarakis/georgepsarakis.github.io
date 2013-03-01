@@ -9,7 +9,18 @@ $(document).ready(
 	return Backbone.sync(method, model, options);
       },
       parse : function(response){
-        var search_terms = $('#search').val().replace(/\*/,'').split(/\s+/);
+
+        var search_terms = $('#search').val().replace(/^\s+|\s+$/, '').replace(/\*/,'').split(/\s+/);
+	var r_search_terms = [];
+	$.each(search_terms, function(index, term){
+          term = escapeRegExp(term);
+	  $.each(diacritics, function(index, diacritic_set){
+	    term = term.replace(diacritic_set[1], diacritic_set[0].source);
+	  });
+	  var p = new RegExp('(' + term + ')', 'gi');
+	  r_search_terms.push(p);
+	});
+
 	$.each(response['results'], function(index, t){
 	  var profile_link = 'https://twitter.com/' + t['from_user'];
 	  response['results'][index]['user_profile_link'] = profile_link;
@@ -45,9 +56,8 @@ $(document).ready(
               tweet_text = tweet_text.replace( mention, link ); 
 	    });
 	  }
-	  $.each(search_terms, function(index, term) {
-	    var p = new RegExp('(' + escapeRegExp(term) + ')', 'gi');
-            tweet_text = tweet_text.replace(p, '<span class="hl">$1</span>');
+	  $.each(r_search_terms, function(index, r_term) {
+            tweet_text = tweet_text.replace(r_term, '<span class="hl">$1</span>');
 	  });
 	  //cleanup html
 	  var split_text = tweet_text.split('<a href="');
