@@ -50,8 +50,8 @@ $(document).ready(
     $('#language-select-selectpicker ul li a').click(
       function(){
 	var icon = '<i class="icon-ok-sign"></i>';
-	//$('#language-select-selectpicker ul li a').remove(icon);
-	//$(this).prepend(icon).fadeIn();
+	$('#language-select-selectpicker ul li a').remove(icon);
+	$(this).prepend(icon).fadeIn();
       }
     );
     $(document).keydown(function(e) {
@@ -94,10 +94,11 @@ $(document).ready(
         $('#language-select').val(fetchHashParam(':lang'));
       }
     }
+    $('#my-searches').append('<li><div class="sidebar-header">Search History</div></li>');
     $.each(getCache('swiftlet').searches, function(index, search){
-      $('#my-searches').append('<li><a class="search-item" href="#"><i class="icon-chevron-right"></i>' + $('<span>'+search+'</span>').text() + '</a></li>');
+      $('#my-searches').append('<li><a class="search-item" href="javascript: void(0);"><i class="icon-chevron-right"></i>' + $('<span>'+search+'</span>').text() + '</a></li>');
     });
-    //$('#my-searches').append('<li><a role="button" class="btn btn-danger" onclick="clearCache();">Clear</a></li>');
+    $('#my-searches').append('<li><button role="button" class="btn btn-danger" onclick="clearCache();">Clear</button></li>');
     $('#my-searches a.search-item').click(function(){
       $('#search').val($(this).text());
       var params = {':q' : $(this).text(), ':lang' : $('#language-select option:selected').val(), ':page' : 1 };
@@ -192,6 +193,7 @@ function clearCache() {
   $.localStorage.clear();
   $.sessionStorage.clear();
   initCache();
+  $('#my-searches li a').parents('li').remove();
 }
 
 function initCache() {

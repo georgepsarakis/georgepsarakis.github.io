@@ -55,49 +55,49 @@
 	        <div class="hero-unit">
 		  <h1>Swiftlet flies in the latest searches on Twitter.</h1>
 		  <p>
-		  <table class="table table-condensed table-bordered">
+		  <table class="table table-hover table-bordered">
 		    <tr>
-		      <td>dog cat</td>
+		      <td><code>dog cat</code></td>
 		      <td>tweets containing both dog and cat</td>
 		    </tr>
 		    <tr>
-		      <td>"dog barks"</td>
+		      <td><code>"dog barks"</code></td>
 		      <td>tweets with the exact phrase</td>
 		    </tr>
 		    <tr>
-		      <td>dog OR cat</td>
+		      <td><code>dog OR cat</code></td>
 		      <td>tweets containing either dog or cat or both</td>
 		    </tr>
 		    <tr>
-		      <td>dog -cat</td>
+		      <td><code>dog -cat</code></td>
 		      <td>tweets containing dog but <u>NOT</u> cat</td>
 		    </tr>
 		    <tr>
-		      <td>#dog</td>
+		      <td><code>#dog</code></td>
 		      <td>containing the hashtag "dog"</td>
 		    </tr>
 		    <tr>
-		      <td>from:george</td>
+		      <td><code>from:george</code></td>
 		      <td>tweets from user "george"</td>
 		    </tr>
 		    <tr>
-		      <td>@george</td>
+		      <td><code>@george</code></td>
 		      <td>mentioning user "george"</td>
 		    </tr>
 		    <tr>
-		      <td>since:2012-05-11</td>
+		      <td><code>since:2012-05-11</code></td>
 		      <td>sent since 14/5/2012</td>
 		    </tr>
 		    <tr>
-		      <td>until:2012-05-11</td>
+		      <td><code>until:2012-05-11</code></td>
 		      <td>sent until 11/5/2012</td>
 		    </tr>
 		    <tr>
-		      <td>dog :)</td>
+		      <td><code>dog :)</code></td>
 		      <td>containing dog with positive attitude</td>
 		    </tr>
 		    <tr>
-		      <td>dog :(</td>
+		      <td><code>dog :(</code></td>
 		      <td>containing dog with negative attitude</td>
 		    </tr>
 		  </table>
@@ -116,12 +116,12 @@
 	      </a>
 	    </div>
 	    <div class="clearfix tweet-text" href='#tweet/<%= id %>'>
-	    <div><%= parsed_text %></div>
-    	    <span class="tweet-datetime label"><%= created_at %></span>
+	    <div class="text-body"><%= parsed_text %></div>
 	    <a class="btn btn-primary btn-mini display-tweet-trigger" title="See it on Twitter" 
 	       href="https://twitter.com/<%= from_user %>/status/<%= id_str %>" target="_blank">
 	       Details
 	    </a>
+    	    <span class="tweet-datetime label"><%= created_at %></span>
 	    </div>
 	</script>
 	<script type="text/template" id="tweet-details">
@@ -131,7 +131,7 @@
 	<div id="display-tweet" class="modal hide fade" 
              tabindex="-1" role="dialog" aria-labelledby="DisplayTweet" aria-hidden="true">
 	  <div class="modal-header">
-	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	  </div>
 	  <div class="modal-body"></div>
 	  <div class="modal-footer">

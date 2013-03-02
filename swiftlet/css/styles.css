@@ -7,8 +7,23 @@ body {
 }
 
 .hero-unit {
-  padding-top: 30px;
-  margin-left: 30px;
+  padding-top: 20px;
+  margin-left: 80px;
+  margin-top: 10px;
+  width: 70%;
+}
+
+.hero-unit table {
+  font-size: 14px;
+}
+
+#content {
+  margin-left: 80px;
+}
+
+.text-body {
+  min-height: 48px;
+  line-height: 1.4em;
 }
 
 #logo {
@@ -49,9 +64,6 @@ body {
   padding: 10px 0;
 }
 
-.navbar-search {
-}
-
 .container-fluid {
   margin-top: 60px;
 }
@@ -67,7 +79,7 @@ body {
 #tweet-list li {
   background-color: #eaf4f9;
   padding: 10px;
-  border-bottom: 1px dotted #0097c6;
+  border-bottom: 1px dotted #8BCCE0;
 }
 
 .hl {
@@ -81,7 +93,7 @@ body {
 
 .tweet-text {
   float: left;
-  width: 90%;
+  width: 85%;
   padding: 0 5px;
   color: #364248;
 }
@@ -96,7 +108,7 @@ body {
 .tweet-datetime {
   font-size: 11px;
   height: 18px;
-  float: left;
+  float: right;
   line-height: 18px;
 }
 
@@ -105,15 +117,12 @@ body {
   width: 250px;
 }
 
-#my-searches {
-}
-
 .caret {
   margin-left: 2px;
 }
 
 .display-tweet-trigger {
-  float: left;
+  float: right;
   margin-left: 2px;
 }
 
@@ -131,7 +140,7 @@ body {
           box-shadow: 0 1px 4px rgba(0,0,0,.065);
 }
 
-#my-searches > li > a {
+#my-searches > li > a.search-item {
   display: block;
   width: 190px \9;
   margin: 0 0 -1px;
@@ -144,12 +153,26 @@ body {
      -moz-border-radius: 6px 6px 0 0;
           border-radius: 6px 6px 0 0;
 }
-#my-searches > li:last-child > a {
+
+#my-searches > li:first-child  {
+  padding: 8px 14px;
+  border-top: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  border-left: 1px solid #e5e5e5;
+  -webkit-border-radius: 6px 6px 0 0;
+     -moz-border-radius: 6px 6px 0 0;
+          border-radius: 6px 6px 0 0;
+}
+
+#my-searches > li:last-child  {
+  padding: 8px 14px;
+  border: 1px solid #e5e5e5;
   -webkit-border-radius: 0 0 6px 6px;
      -moz-border-radius: 0 0 6px 6px;
           border-radius: 0 0 6px 6px;
 }
-#my-searches > .active > a {
+
+#my-searches > .active > a.search-item {
   position: relative;
   z-index: 2;
   padding: 9px 15px;
@@ -172,6 +195,7 @@ body {
 #my-searches a.search-item:hover .icon-chevron-right {
   opacity: .5;
 }
+
 #my-searches .active .icon-chevron-right,
 #my-searches .active a.search-item:hover .icon-chevron-right {
   background-image: url(../img/glyphicons-halflings-white.png);
@@ -187,4 +211,8 @@ body {
   bottom: 270px;
 }
 
-
+.sidebar-header {
+  font-size: 20px;
+  color: #b6b6b6;
+  font-weight: 600;
+}
