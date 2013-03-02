@@ -17,4 +17,5 @@ TODO
 - https://dev.twitter.com/docs/api/1/get/users/lookup
 - UI hints
 - tooltips
+- search frequencies
 - query builder / add syntax tips/help (?)

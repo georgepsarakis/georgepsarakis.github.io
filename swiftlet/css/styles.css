@@ -13,6 +13,28 @@ body {
   width: 70%;
 }
 
+.tooltip {
+  max-width: 150px;
+}
+
+.tooltip.left {
+  margin-left: -10px;
+}
+
+.tooltip-inner {
+  max-width: 150px;
+  padding: 4px;
+  color: #ffffff;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  background-color: #000000;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+}
+
+
 .hero-unit .table {
   font-size: 14px;
 }
@@ -20,17 +42,24 @@ body {
 .popover {
   color: #000;
   font-size: 11px;
-  min-width: 400px;
+  text-shadow : none;
 }
 
+.popover-content .table {
+  min-width: 250px;
+}
+  
 .popover code {
   font-size: 11px;
+  margin-top: 8px;
+  display: block;
 }
 
 .popover-content .table th,
 .popover-content .table td {
   padding: 4px 5px;
 }
+
 
 #syntax-wrapper {
   margin-top: 10px;
@@ -61,7 +90,11 @@ body {
 
 #language-select-selectpicker {
   float: left;
-  width: 220px;
+  width: 170px!important;
+}
+
+#language-select-selectpicker.bootstrap-select .btn {
+  width: 170px;
 }
 
 .navbar-inner {

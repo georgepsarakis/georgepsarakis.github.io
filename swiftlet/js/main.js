@@ -27,8 +27,15 @@ $(document).ready(
       placement : 'bottom',
       title     : 'Query Syntax',
       content   : $('.hero-unit #syntax-wrapper').html(),
-      delay     : { show : 2000, hide : 200 },
-      trigger   : 'focus'      
+      delay     : { show : 2000, hide : 50 },
+      trigger   : 'manual'      // -> event.ctrlKey
+    });
+    $('#search.help').tooltip({
+      placement : 'left',
+      html      : true,
+      title     : 'Press Ctrl+H to display syntax help!',
+      trigger   : 'focus',      
+      delay     : { show : 1000, hide : 50 }
     });
     $('#language-select').change(
       function(){
@@ -102,21 +109,33 @@ $(document).ready(
         $('#language-select').val(fetchHashParam(':lang'));
       }
     }
+    
+    // create previous searches list
     $('#my-searches').append('<li><div class="sidebar-header">Search History</div></li>');
     $.each(getCache('swiftlet').searches, function(index, search){
       $('#my-searches').append('<li><a class="search-item" href="javascript: void(0);"><i class="icon-chevron-right"></i>' + $('<span>'+search+'</span>').text() + '</a></li>');
     });
-    $('#my-searches').append('<li><button role="button" class="btn btn-danger" onclick="clearCache();">Clear</button></li>');
+    $('#my-searches').append('<li><button role="button" onclick="$(\'#modal-box\').modal(\'show\');" class="btn btn-danger" data-toggle="modal">Clear</button></li>');
+
     $('#my-searches a.search-item').click(function(){
       $('#search').val($(this).text());
       var params = {':q' : $(this).text(), ':lang' : $('#language-select option:selected').val(), ':page' : 1 };
       Reload(hashManage(params));
     });
     $('#search').keydown(function(e) {
+      // Ctrl + H
+      if ( e.ctrlKey && e.which == 72 ) {
+        $('#search').popover('show');
+	e.preventDefault();
+	$('#search').tooltip('hide').removeClass('help');
+	return false;
+      }
       if ( e.keyCode == 13 ) {
         var params = {':q' : $(this).val(), ':lang' : $('#language-select option:selected').val(), ':page' : 1 };
         Reload(hashManage(params));
         setCacheArray('swiftlet', $(this).val());
+	e.preventDefault();
+	return false;
       }
     });
     $('#search').focus(
@@ -124,6 +143,7 @@ $(document).ready(
 	$(this).css('width', $(this).parents('.navbar-inner').width()/2);
     }).blur(function() {
       $(this).css('width', search_width);
+      $('#search').popover('hide');
     });
     $('.selectpicker').selectpicker();
   }
