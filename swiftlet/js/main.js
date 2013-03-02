@@ -22,6 +22,14 @@ $(document).ready(
   function() {    
     initCache();
     search_width = $('#search').width();
+    $('#search').popover({
+      html      : true,
+      placement : 'bottom',
+      title     : 'Query Syntax',
+      content   : $('.hero-unit #syntax-wrapper').html(),
+      delay     : { show : 2000, hide : 200 },
+      trigger   : 'focus'      
+    });
     $('#language-select').change(
       function(){
 	Reload(hashManage({ ':lang' : $(this).children('option:selected').val() }));

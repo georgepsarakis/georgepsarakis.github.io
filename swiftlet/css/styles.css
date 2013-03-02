@@ -13,8 +13,27 @@ body {
   width: 70%;
 }
 
-.hero-unit table {
+.hero-unit .table {
   font-size: 14px;
+}
+
+.popover {
+  color: #000;
+  font-size: 11px;
+  min-width: 400px;
+}
+
+.popover code {
+  font-size: 11px;
+}
+
+.popover-content .table th,
+.popover-content .table td {
+  padding: 4px 5px;
+}
+
+#syntax-wrapper {
+  margin-top: 10px;
 }
 
 #content {
