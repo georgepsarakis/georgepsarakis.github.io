@@ -1,5 +1,6 @@
 var search_width = 0;
 var current_tweet_scroll_index = 0;
+var scroll_reload_timer = null;
 
 var diacritics = [
         [/[A\300-\306]/g, 'A'],
@@ -73,31 +74,33 @@ $(document).ready(
       var hook = ($(document.activeElement).prop('tagName') == 'BODY');
       var scroll_options = { 'axis' : 'y', 'duration' : 1000, 'margin' : true , 'offset' : { 'top' : -60, 'left' : 0 } };
       if ( hook && ( e.keyCode == 40 ) ) {
-	current_tweet_scroll_index++;
-	if ( current_tweet_scroll_index > $('#tweet-list li').length - 1 )
-	  current_tweet_scroll_index = $('#tweet-list li').length - 1;
-        $.scrollTo('#tweet-list li:eq(' + current_tweet_scroll_index + ')', scroll_options );
-	e.preventDefault();
+        current_tweet_scroll_index++;
+        if ( current_tweet_scroll_index > $('#tweet-list li').length - 1 )
+          current_tweet_scroll_index = $('#tweet-list li').length - 1;
+            $.scrollTo('#tweet-list li:eq(' + current_tweet_scroll_index + ')', scroll_options );
+        e.preventDefault();
       }
       else if ( hook && ( e.keyCode == 38 ) ) {
-	current_tweet_scroll_index--;
-	if ( current_tweet_scroll_index < 0 )
-	  current_tweet_scroll_index = 0;
-	$.scrollTo('#tweet-list li:eq(' + current_tweet_scroll_index + ')', scroll_options );
-	e.preventDefault();
+      current_tweet_scroll_index--;
+      if ( current_tweet_scroll_index < 0 )
+        current_tweet_scroll_index = 0;
+      $.scrollTo('#tweet-list li:eq(' + current_tweet_scroll_index + ')', scroll_options );
+      e.preventDefault();
       } else {
-	current_tweet_scroll_index = 0;
+    	current_tweet_scroll_index = 0;
       }
     });    
     // Infinite scroll
     $(window).scroll(function() {
+      clearTimeout(scroll_reload_timer);
       var height = $(document).height() - $(window).height() - 10;
       var scroll_condition = ($(window).scrollTop() >= height);
       scroll_condition = scroll_condition && ($('.blockUI').css('display') != 'none');
       if ( scroll_condition ) {
-	var current_page = parseInt(fetchHashParam(':page'), 10);
-	if ( !isNaN(current_page) )
-          Reload(hashManage({ ':page' : current_page + 1 } ));
+        var current_page = parseInt(fetchHashParam(':page'), 10);
+        if ( !isNaN(current_page) ){
+          scroll_reload_timer = setTimeout(function(){ Reload(hashManage({ ':page' : current_page + 1 } )); $.unblockUI(); }, 5000);          
+        }
       }
     });
     // restore controls based on hash
@@ -181,8 +184,8 @@ function Reload(hash) {
   };
   $.blockUI({ overlayCSS : blockui_overlay, 
               css: blockui_css , 
-	      fadeIn : 100,
-	      fadeOut : 800,
+	          fadeIn : 100,
+              fadeOut : 800,
               message: '<img src="img/ajax-loader.png" />' 
             }); 
 }

@@ -4,22 +4,26 @@ $(document).ready(
     window.TweetCollection = Backbone.Collection.extend({
       model : Tweet,
       sync : function(method, model, options){
-	options.dataType = 'jsonp';
-	options.url = 'http://search.twitter.com/search.json?rpp=50&callback=?';
-	return Backbone.sync(method, model, options);
+      options.dataType = 'jsonp';
+      options.url = 'http://search.twitter.com/search.json?rpp=50&callback=?';
+      return Backbone.sync(method, model, options);
       },
       parse : function(response){
-
+        console.log(response);
+        if ( response.results.length == 0 ) {
+          $('<div id="no-results-found"><span id="sad-smiley">:(</span> No Results found (yet). <br />Don\'t lose hope, try again!</div>').appendTo('#content').fadeIn();
+          return false;
+        }
         var search_terms = $('#search').val().replace(/^\s+|\s+$/, '').replace(/\*/,'').split(/\s+/);
-	var r_search_terms = [];
-	$.each(search_terms, function(index, term){
+     	var r_search_terms = [];
+	    $.each(search_terms, function(index, term){
           term = escapeRegExp(term);
-	  $.each(diacritics, function(index, diacritic_set){
-	    term = term.replace(diacritic_set[1], diacritic_set[0].source);
-	  });
-	  var p = new RegExp('(' + term + ')', 'gi');
-	  r_search_terms.push(p);
-	});
+    	  $.each(diacritics, function(index, diacritic_set){
+	        term = term.replace(diacritic_set[1], diacritic_set[0].source);
+	      });
+     	  var p = new RegExp('(' + term + ')', 'gi');
+	      r_search_terms.push(p);
+        });
 
 	$.each(response['results'], function(index, t){
 	  var profile_link = 'https://twitter.com/' + t['from_user'];

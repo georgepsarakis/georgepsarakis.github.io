@@ -268,3 +268,27 @@ body {
   color: #b6b6b6;
   font-weight: 600;
 }
+
+
+#no-results-found {
+  font-size: 28px;
+  font-weight: 200;
+  text-align: center;
+  margin: 0 auto;
+  width: 70%;
+  line-height: 34px;
+  padding: 60px 30px;
+  background-color: #f5f5f5;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+ }
+
+
+#sad-smiley {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+}  
+
+
