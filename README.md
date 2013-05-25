@@ -1,8 +1,5 @@
-Personal Repo
-==============
-
-JS Projects
------------
+HTML/CSS/JS Projects
+====================
 
 __Swiftlet__
 
