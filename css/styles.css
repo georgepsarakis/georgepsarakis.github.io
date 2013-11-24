@@ -42,25 +42,10 @@ h1,h2,h3,a,p,span,div,* {
   font-size: 30px;
 }
 
-.skills {
+.section {
   background-color: #136A9D;
 }
 
-.bio {
-  background-color: #136A9D;
-}
-
-.skill {
-  margin-right: 4px;
-  font-weight: normal;
-}
-
-.skill-label {
-  cursor: default;
-  width: 150px;
-  display: block;
-  margin: 0 8px 8px 0;
-}
 .profiles {  
   background-color: #7BAFD7;
 }
@@ -78,11 +63,6 @@ h1,h2,h3,a,p,span,div,* {
 .separator {
   height: 10px;
   width: 100%;
-}
-
-.profile {
-  font-weight: 400;
-  display: inline-block;
 }
 
 .section h2 {
