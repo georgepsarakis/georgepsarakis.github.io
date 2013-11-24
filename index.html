@@ -1,65 +1,13 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>George Psarakis/Developer</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
-        <link rel="stylesheet" href="swiftlet/css/normalize.css">
-        <link rel="stylesheet" href="swiftlet/css/main.css">
-	<link rel="stylesheet" href="swiftlet/js/vendor/bootstrap/css/bootstrap.min.css">
-    <script src="swiftlet/js/vendor/modernizr-2.6.2.min.js"></script>
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-18744331-4']);
-      _gaq.push(['_trackPageview']);
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
-    </head>
-    <body>
-    <!--[if lt IE 7]>
-    <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-    <![endif]-->
-    <style>
-      #wrapper {
-        width: 960px;
-        margin: 0 auto;
-        letter-spacing: 2px;
-      }
-     #wrapper h1 {
-       font-size: 70px;
-       margin: 40px 0;
-     }
-     #wrapper h2 {
-       margin: 20px 0;
-       margin-left: 4px;
-       font-weight: 200;
-       font-size: 20px;
-       color: #858585;
-     }
-     #wrapper .btn {
-       width: 424px;
-       font-size: 30px;
-       display: block;
-       margin: 20px 0;
-     }
-    </style>
-    <div id="wrapper">
-      <h1>Project Index</h1>
-      <h2>George Psarakis</h2>
-      <a href="./techu-search-server" class="btn btn-success btn-large">Techu</a>
-      <a href="./swiftlet" class="btn btn-success btn-large">Swiftlet</a>
-    </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script src="swiftlet/js/plugins.js"></script>
-    <script src="swiftlet/js/vendor/bootstrap/js/bootstrap.min.js"></script>
-  </body>
-</html>
+---
+layout: default
+---
+
+<ul class="posts">
+  {% for post in site.posts %}
+    <li>
+      <span>{{ post.date | date_to_string }}</span> 
+      &raquo; <a href="{{ post.url }}">{{ post.title }}</a>
+    </li>
+  {% endfor %}
+</ul>
+
