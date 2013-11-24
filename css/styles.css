@@ -42,12 +42,8 @@ h1,h2,h3,a,p,span,div,* {
   font-size: 30px;
 }
 
-.section {
+.content {
   background-color: #136A9D;
-}
-
-.profiles {  
-  background-color: #7BAFD7;
 }
 
 .section {
