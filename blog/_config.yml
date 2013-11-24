@@ -1,3 +1,3 @@
-baseurl: "http://georgepsarakis.github.io/blog"
+layouts: ./blog/_layouts
 markdown: rdiscount
 pygments: true
