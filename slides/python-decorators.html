@@ -31,15 +31,15 @@
                 <section>
                     <h2>Why are they used?</h2>
                     <ul>
-                        <li>Mostly used to add extra features to a function</blockquote>
-                        <li>Developers can build APIs by implementing decorators</li>
-                        <li>More abstract yet DRYer and more readable code</li>
+                        <li class="fragment" data-fragment-index="1">Mostly used to add extra features to a function</blockquote>
+                        <li class="fragment" data-fragment-index="2">Developers can build APIs by implementing decorators</li>
+                        <li class="fragment" data-fragment-index="3">More abstract yet DRYer and more readable code</li>
                     </ul>
                 </section>
                 <section>
                     <h2>...OK, what are they used for?</h2>
                     <ul>
-                        <li>
+                        <li class="fragment" data-fragment-index="1">
                             Function pre-processing:
                             <ul>
                                 <li>Argument validation</li>
@@ -48,7 +48,7 @@
                                 <li>Caching</li>
                             </ul>
                         </li>
-                        <li>
+                        <li class="fragment" data-fragment-index="2">
                             Function result post-processing:
                             <ul>
                                 <li>
@@ -67,10 +67,10 @@
                 <section>
                     <h2>What are they?</h2>
                     <ul>
-                        <li>Decorators are callables that return function objects</li>
-                        <li>Remember that functions are first-class objects in Python!</li>                                            
+                        <li class="fragment" data-fragment-index="1">Decorators are callables that return function objects</li>
+                        <li class="fragment" data-fragment-index="2">Remember that functions are first-class objects in Python!</li>                                            
                     </ul>
-                    <pre>
+                    <pre class="fragment" data-fragment-index="3">
                     <code data-trim>
 # Fabric - restrict task execution to specific hosts
 from fabric import env                    
@@ -99,6 +99,8 @@ def my_view(request):
                     <h2>Writing your own decorator</h2>
                     <pre>
                         <code data-trim>
+import json                        
+
 # Defining a decorator
 def jsonify(f):
     def wrapper(data):
@@ -112,6 +114,7 @@ def f(x):
 
 # Which is actually syntactic sugar for
 # f = jsonify(f) 
+
 print(f(2))
 '''
 {"example": 2}
@@ -124,9 +127,9 @@ print(f(2))
                     <pre>
                         <code data-trim>
 def jsonify_args(indent=None):
-    def outer_wrapper(f):
+    def outer_wrapper(function):
         def inner_wrapper(data):
-            return json.dumps(f(data), indent=indent)
+            return json.dumps(function(data), indent=indent)
         return inner_wrapper
     return outer_wrapper
 
@@ -153,10 +156,10 @@ print(f)
 from functools import wraps
 
 def jsonify_args(indent=None):
-    def outer_wrapper(f):
-        @wraps(f)
+    def outer_wrapper(function):
+        @wraps(function)
         def inner_wrapper(data):
-            return json.dumps(f(data), indent=indent)
+            return json.dumps(function(data), indent=indent)
         return inner_wrapper
     return outer_wrapper
 
@@ -165,6 +168,39 @@ print(f)
 
                     </code>
                 </pre>
+                </section>
+                <section>
+                    <h2>Classes as decorators</h2>
+                    <pre>
+                        <code style="max-height: 100%;" data-trim>
+class Jsonify(object):
+    def __init__(self, indent=None):
+        self._indent = indent
+
+    def __call__(self, function):
+        @wraps(function)
+        def wrapper(*args, **kwargs):
+            return json.dumps(
+                function(*args, **kwargs),
+                indent=self._indent
+            )
+        return wrapper
+
+@Jsonify(indent=4)
+def f(x, y):
+    return {
+        "product": x * y, "sum": x + y,
+    }
+
+print(f(10,20))
+'''
+{
+    "sum": 30,
+    "product": 200
+}
+'''
+                        </code>
+                    </pre>
                 </section>
                 <section>
                     <h2>Links/References</h2>
@@ -184,8 +220,33 @@ print(f)
                                 http://python-3-patterns-idioms-test.readthedocs.org/en/latest/PythonDecorators.html
                             </a>
                         </li>
+                        <li>
+                            <a href="http://stackoverflow.com/questions/739654/how-can-i-make-a-chain-of-function-decorators-in-python/1594484#1594484">
+                            http://stackoverflow.com/questions/739654/how-can-i-make-a-chain-of-function-decorators-in-python/1594484#1594484
+                            </a>
+                        </li>
                     </ul>
                 </section>
+                <section>
+                    <h2>Thanks!</h2>
+                    <p>
+                        <img style="margin:0; background: none; box-shadow: none; border: 0;"
+                            src="http://gpsarakis.com/img/GitHub-Mark-64px.png">
+                    </p>
+                    <p>
+                        <a href="https://github.com/georgepsarakis">
+                            https://github.com/georgepsarakis
+                        </a>
+                    </p>
+                    <p>
+                        <img style="margin:0; background: none; box-shadow: none; border: 0;"
+                            src="http://gpsarakis.com/img/twitter.png">
+                    </p>
+                    <p>
+                        <a href="https://twitter.com/georgepsarakis">
+                            @georgepsarakis
+                        </a>
+                    </p>
 
             </div>
         </div>
