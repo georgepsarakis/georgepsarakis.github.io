@@ -1,2 +1,5 @@
-markdown: rdiscount
+name: George Psarakis - Thoughts on Software Engineering
+markdown: kramdown
 pygments: true
+theme: cayman
+permalink: /blog/:year/:title
