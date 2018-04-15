@@ -1,5 +1,5 @@
 name: George Psarakis - Thoughts on Software Engineering
+highlighter: rouge
 markdown: kramdown
-pygments: true
 theme: cayman
 permalink: /blog/:year/:title
